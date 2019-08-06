@@ -1,0 +1,58 @@
+@import "../../shared/variables.scss";
+
+#homepage {
+  height: 100vh;
+  padding: 20px;
+  font-family: $primaryFont;
+  color: white;
+
+  h1 {
+    color: $themeColor;
+    font-size: 1.7em;
+  }
+
+  button {
+    background: $themeColor;
+    margin-top: 10px;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  img {
+    height: 202px;
+    width: auto;
+    margin-bottom: 13px;
+  }
+
+  section {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+
+    img:first-of-type {
+      max-height: 60px;
+      position: relative;
+      top: 1.1em;
+    }
+
+    p {
+      display: inline-block;
+      text-transform: uppercase;
+      font-family: "Baloo Chettan", cursive;
+      font-size: 2.3em;
+      margin-right: 5px;
+      color: #e0e0e0;
+    }
+  }
+
+  footer {
+    position: relative;
+    top: 10vh;
+    p {
+      text-align: center;
+    }
+  }
+}
