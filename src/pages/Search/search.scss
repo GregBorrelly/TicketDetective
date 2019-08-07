@@ -1,0 +1,49 @@
+@import "../../shared/css/variables.scss";
+
+#search {
+  font-family: $primaryFont;
+
+  p {
+    font-weight: bold;
+    span {
+      font-weight: 200;
+      color: black;
+    }
+  }
+
+  .content {
+    p:last-of-type {
+      margin-top: 10px;
+    }
+    button {
+      float: right;
+      background: $themeColor;
+      color: white;
+    }
+  }
+
+  .error {
+    text-align: center;
+    color: white;
+  }
+  .loader {
+    img {
+      max-height: 190px;
+      margin-left: 33vw;
+      margin-top: 30vh;
+      animation: blink 1.5s linear infinite;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@import "../../shared/variables.scss";
+@import "../../shared/css/variables.scss";
 
 #homepage {
   height: 100vh;
@@ -53,6 +53,7 @@
     top: 10vh;
     p {
       text-align: center;
+      color: #00c0ff;
     }
   }
 }
