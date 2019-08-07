@@ -1,6 +1,5 @@
 // Actions
 import { signout } from "../../shared/helpers/firebase";
-import { async } from "q";
 
 const SET_USER = "ticketDetective/user/SET_USER";
 const USER_LOGOUT = "ticketDetective/user/LOGOUT";

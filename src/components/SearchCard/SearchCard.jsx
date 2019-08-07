@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Image, Icon, Container, Button } from "semantic-ui-react";
+import { Card, Icon, Container, Button } from "semantic-ui-react";
 import "./searchCard.scss";
 const SearchCard = ({
   summons_number,

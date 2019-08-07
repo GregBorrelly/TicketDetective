@@ -15,7 +15,7 @@ export default class Homepage extends Component {
           </section>
 
           <h1>Find parking violations using your license plate</h1>
-          <img src={Car} />
+          <img src={Car} alt="picture of car in parking lot" />
           <p>
             Ticket detective is a tool that allows you to search state records
             for parking and camera violations. The tool allows you to keep track

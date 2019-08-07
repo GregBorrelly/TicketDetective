@@ -35,7 +35,13 @@ class Dashboard extends Component {
         {user && (
           <div id="dashboard">
             <Segment>
-              <Image src={user.photoUrl} size="medium" circular centered />
+              <Image
+                src={user.photoUrl}
+                size="medium"
+                circular
+                centered
+                alt="user-image"
+              />
               <h1>{user.displayName}</h1>
             </Segment>
             <Container>
