@@ -20,7 +20,6 @@ class App extends Component {
   componentDidMount() {
     this.unsuscribeFromAuth = auth.onAuthStateChanged(async auth => {
       const user = await createUser(auth);
-      debugger;
       if (user) {
         this.props.setUser(user);
         this.props.history.push("/dashboard");

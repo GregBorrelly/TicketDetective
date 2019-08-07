@@ -22,7 +22,6 @@ export const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export const createUser = async user => {
-  debugger;
   if (!user) return;
 
   const userRef = firestore.doc(`users/${user.uid}`);
@@ -45,7 +44,6 @@ export const createUser = async user => {
 };
 
 export const getUser = async uid => {
-  debugger;
   if (!uid) return null;
   try {
     const userDocument = await firestore
