@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { Menu, Segment } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 import "./navigation.scss";
-export default class MenuExampleSecondaryPointing extends Component {
+class Navigation extends Component {
   state = { activeItem: "home" };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
+    this.props.history.push(`/${name}`);
+  };
 
   render() {
     const { activeItem } = this.state;
@@ -37,3 +41,5 @@ export default class MenuExampleSecondaryPointing extends Component {
     );
   }
 }
+
+export default withRouter(Navigation);

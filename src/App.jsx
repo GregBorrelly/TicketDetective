@@ -1,17 +1,31 @@
-import React from 'react';
-import {Container} from 'semantic-ui-react'
-import './App.scss';
-import Navigation from './components/Navigation/navigation'
-import HomePage from './pages/Homepage/homepage'
-import Search from './pages/Search/search'
+import React, { Component } from "react";
+import { Container } from "semantic-ui-react";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
+import Navigation from "./components/Navigation/navigation";
+import HomePage from "./pages/Homepage/homepage";
+import Search from "./pages/Search/search";
+import "./App.scss";
 
-function App() {
-  return (
-    <Container className="App">
-      <Navigation />
-      <Search />
-    </Container>
-  );
+class App extends Component {
+  state = {
+    user: null
+  };
+
+  render() {
+    const { user } = this.state;
+    return (
+      <Container className="App">
+        <BrowserRouter>
+          {user && <Navigation />}
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/app" component={() => <div>App Page</div>} />
+            <Route exact path="/search" component={Search} />
+          </Switch>
+        </BrowserRouter>
+      </Container>
+    );
+  }
 }
 
 export default App;
