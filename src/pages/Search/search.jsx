@@ -18,16 +18,15 @@ class Search extends Component {
 
   fetchRecords = async licensePlate => {
     this.setState({ isSearching: true, licensePlate });
-    const res = await fetch(
-      "https://data.cityofnewyork.us/resource/uvbq-3m68.json"
-    );
-    const tickets = await res.json();
+    const snapshot = await firestore.collection("records").get();
+    const tickets = snapshot.docs.map(doc => doc.data());
+
     const records = tickets.filter(ticket => {
       if (ticket.plate === licensePlate) {
         return ticket;
       }
     });
-
+    debugger;
     this.setState({ records, isSearching: false });
   };
 
