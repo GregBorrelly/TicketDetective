@@ -4,12 +4,20 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Navigation from "./components/Navigation/navigation";
 import HomePage from "./pages/Homepage/homepage";
 import Search from "./pages/Search/search";
+import { firestore, auth } from "./shared/helpers/firebase";
 import "./App.scss";
+
 
 class App extends Component {
   state = {
     user: null
   };
+  unsuscribeFromAuth = null;
+  componentDidMount() {
+    this.unsuscribeFromAuth = auth.onAuthStateChanged(user => {
+      debugger;
+    });
+  }
 
   render() {
     const { user } = this.state;
