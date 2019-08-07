@@ -11,17 +11,6 @@
     }
   }
 
-  .content {
-    p:last-of-type {
-      margin-top: 10px;
-    }
-    button {
-      float: right;
-      background: $themeColor;
-      color: white;
-    }
-  }
-
   .error {
     text-align: center;
     color: white;

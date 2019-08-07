@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import Navigation from "./components/Navigation/navigation";
 import HomePage from "./pages/Homepage/homepage";
 import Dashboard from "./pages/Dashboard/dashboard";
 import Search from "./pages/Search/search";
 import { firestore, auth } from "./shared/helpers/firebase";
+
+import { connect } from "react-redux";
+import { setUser } from "./redux/modules/user";
+
 import "./App.scss";
 
 class App extends Component {
@@ -16,24 +20,39 @@ class App extends Component {
   componentDidMount() {
     this.unsuscribeFromAuth = auth.onAuthStateChanged(user => {
       debugger;
+      if (user) {
+        this.props.setUser(user);
+        this.props.history.push("/dashboard");
+      } else {
+        this.props.history.push("/");
+      }
     });
   }
 
   render() {
-    const { user } = this.state;
+    const { user } = this.props;
+
     return (
       <Container className="App">
-        <BrowserRouter>
-          {user && <Navigation />}
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/app" component={Dashboard} />
-            <Route exact path="/search" component={Search} />
-          </Switch>
-        </BrowserRouter>
+        {user && <Navigation />}
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/search" component={Search} />
+        </Switch>
       </Container>
     );
   }
 }
-
-export default App;
+const mapStateToProps = state => ({
+  user: state.user
+});
+const mapDispatchToProps = dispatch => ({
+  setUser: userData => dispatch(setUser(userData))
+});
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

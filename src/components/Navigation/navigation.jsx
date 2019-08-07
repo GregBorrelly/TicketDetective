@@ -1,12 +1,19 @@
 import React, { Component } from "react";
-import { Menu, Segment } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { logoutUser } from "../../redux/modules/user";
 import "./navigation.scss";
 class Navigation extends Component {
-  state = { activeItem: "home" };
+  state = { activeItem: "dashboard" };
 
   handleItemClick = (e, { name }) => {
+    const { logoutUser } = this.props;
+
     this.setState({ activeItem: name });
+    if (name === "logout") {
+      logoutUser();
+    }
     this.props.history.push(`/${name}`);
   };
 
@@ -17,8 +24,8 @@ class Navigation extends Component {
       <div>
         <Menu pointing secondary>
           <Menu.Item
-            name="home"
-            active={activeItem === "home"}
+            name="dashboard"
+            active={activeItem === "dashboard"}
             onClick={this.handleItemClick}
             color="orange"
           />
@@ -42,4 +49,11 @@ class Navigation extends Component {
   }
 }
 
-export default withRouter(Navigation);
+const mapDispatchToProps = dispatch => ({
+  logoutUser: () => dispatch(logoutUser())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(Navigation));
