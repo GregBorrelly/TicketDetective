@@ -3,10 +3,10 @@ import { Container } from "semantic-ui-react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Navigation from "./components/Navigation/navigation";
 import HomePage from "./pages/Homepage/homepage";
+import Dashboard from "./pages/Dashboard/dashboard";
 import Search from "./pages/Search/search";
 import { firestore, auth } from "./shared/helpers/firebase";
 import "./App.scss";
-
 
 class App extends Component {
   state = {
@@ -27,7 +27,7 @@ class App extends Component {
           {user && <Navigation />}
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/app" component={() => <div>App Page</div>} />
+            <Route exact path="/app" component={Dashboard} />
             <Route exact path="/search" component={Search} />
           </Switch>
         </BrowserRouter>
