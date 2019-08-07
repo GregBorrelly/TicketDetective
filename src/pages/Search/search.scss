@@ -2,6 +2,7 @@
 
 #search {
   font-family: $primaryFont;
+  
 
   p {
     font-weight: bold;
@@ -14,6 +15,10 @@
   .error {
     text-align: center;
     color: white;
+
+    span {
+      color: $themeColor;
+    }
   }
   .loader {
     img {

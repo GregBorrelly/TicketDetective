@@ -5,7 +5,7 @@ import Navigation from "./components/Navigation/navigation";
 import HomePage from "./pages/Homepage/homepage";
 import Dashboard from "./pages/Dashboard/dashboard";
 import Search from "./pages/Search/search";
-import { firestore, auth } from "./shared/helpers/firebase";
+import { firestore, auth, createUser } from "./shared/helpers/firebase";
 
 import { connect } from "react-redux";
 import { setUser } from "./redux/modules/user";
@@ -18,7 +18,8 @@ class App extends Component {
   };
   unsuscribeFromAuth = null;
   componentDidMount() {
-    this.unsuscribeFromAuth = auth.onAuthStateChanged(user => {
+    this.unsuscribeFromAuth = auth.onAuthStateChanged(async auth => {
+      const user = await createUser(auth);
       debugger;
       if (user) {
         this.props.setUser(user);

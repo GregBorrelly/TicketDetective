@@ -1,54 +1,76 @@
 import SearchCard from "../../components/SearchCard/SearchCard";
 import React, { Component } from "react";
 import { Image, Container, Segment } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { firestore } from "../../shared/helpers/firebase";
+import { setUser } from "../../redux/modules/user";
 import "./dasboard.scss";
-export default class Dashboard extends Component {
-  state = {
-    records: [
-      {
-        plate: "HKW6456",
-        state: "NY",
-        license_type: "PAS",
-        summons_number: "8302030340",
-        issue_date: "10/14/2016",
-        violation_time: "02:36P",
-        violation: "DOUBLE PARKING",
-        fine_amount: "115",
-        penalty_amount: "0",
-        interest_amount: "0",
-        reduction_amount: "0",
-        payment_amount: "115",
-        amount_due: "0",
-        precinct: "030",
-        county: "NY",
-        issuing_agency: "TRAFFIC",
-        summons_image: {
-          url:
-            "http://nycserv.nyc.gov/NYCServWeb/ShowImage?searchID=VDBSTmQwMXFRWHBOUkUwd1RVRTlQUT09&locationName=_____________________",
-          description: "View Summons"
-        }
-      }
-    ]
+class Dashboard extends Component {
+  get uid() {
+    return this.props.user.id;
+  }
+
+  get userRef() {
+    return firestore.collection("users").doc(this.uid);
+  }
+
+  removeTicketFromRecords = async summons_number => {
+    const { user, setUser } = this.props;
+    const updatedRecords = user.userRecords.filter(
+      record => record.summons_number !== summons_number
+    );
+    await this.userRef.update({
+      userRecords: updatedRecords
+    });
+
+    const userDocument = await this.userRef.get();
+    setUser({ ...userDocument.data() });
   };
+
   render() {
-    const { records } = this.state;
+    const { removeTicketFromRecords } = this;
+    const { user } = this.props;
     return (
       <div>
-        <Segment>
-          <Image
-            src="https://lh4.googleusercontent.com/-RiwXi7e_aM4/AAAAAAAAAAI/AAAAAAAABLo/ADoTADTkg_A/photo.jpg"
-            size="medium"
-            circular
-            centered
-          />
-          <h1>Greg Borrelly</h1>
-        </Segment>
-
-        <p>Records</p>
-        <Container>
-          {records && records.map(record => <SearchCard {...record} />)}
-        </Container>
+        {user && (
+          <div id="dashboard">
+            <Segment>
+              <Image src={user.photoUrl} size="medium" circular centered />
+              <h1>{user.displayName}</h1>
+            </Segment>
+            <Container>
+              <h2>Records</h2>
+              {user.userRecords.length > 0 ? (
+                user.userRecords.map(record => (
+                  <SearchCard
+                    {...record}
+                    inDashboard
+                    removeTicketFromRecords={removeTicketFromRecords}
+                  />
+                ))
+              ) : (
+                <p className="emptyState">
+                  <span> {user.displayName}</span> you do not have any records
+                  saved, use the
+                  <span> search</span> feature to search state records.
+                </p>
+              )}
+            </Container>
+          </div>
+        )}
       </div>
     );
   }
 }
+
+const maptStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  setUser: userData => dispatch(setUser(userData))
+});
+export default connect(
+  maptStateToProps,
+  mapDispatchToProps
+)(Dashboard);

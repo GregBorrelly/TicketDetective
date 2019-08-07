@@ -21,7 +21,7 @@ class Navigation extends Component {
     const { activeItem } = this.state;
 
     return (
-      <div>
+      <div id="navigation">
         <Menu pointing secondary>
           <Menu.Item
             name="dashboard"

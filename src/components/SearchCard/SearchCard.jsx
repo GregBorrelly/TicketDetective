@@ -15,11 +15,16 @@ const SearchCard = ({
   interest_amount,
   reduction_amount,
   payment_amount,
-  amount_due
+  amount_due,
+  inDashboard,
+  removeTicketFromRecords,
+  addTicketToRecords,
+  loading,
+  userRecords = []
 }) => {
   return (
-    <div id="searchCard">
-      <Card fluid>
+    <div id="searchCard" >
+      <Card fluid >
         <Card.Content>
           <Card.Header>{violation}</Card.Header>
           <Card.Meta>
@@ -72,7 +77,44 @@ const SearchCard = ({
             <Icon name="picture" color="red" />
             View ticket
           </a>
-          <Button>Save Ticket to History</Button>
+          {inDashboard ? (
+            <Button
+              onClick={() => {
+                removeTicketFromRecords(summons_number);
+              }}
+            >
+              Remove Ticket from History
+            </Button>
+          ) : (
+            <Button
+              onClick={() =>
+                addTicketToRecords({
+                  summons_number,
+                  violation,
+                  issue_date,
+                  fine_amount,
+                  violation_time,
+                  summons_image,
+                  issuing_agency,
+                  state,
+                  violation_status,
+                  penalty_amount,
+                  interest_amount,
+                  reduction_amount,
+                  payment_amount,
+                  amount_due
+                })
+              }
+              loading={loading}
+              disabled={
+                userRecords.filter(
+                  record => record.summons_number === summons_number
+                ).length
+              }
+            >
+              Save Ticket to History
+            </Button>
+          )}
         </Card.Content>
       </Card>
     </div>
